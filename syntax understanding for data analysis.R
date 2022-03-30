@@ -17,6 +17,7 @@ boxplot(pollution$Daily.Mean.PM2.5.Concentration, col = "blue")
 hist(pollution$Daily.Mean.PM2.5.Concentration, col = 'green')
 # show data intensity
 rug(pollution$Daily.Mean.PM2.5.Concentration)
+
 # if increase bins 
 hist(pollution$Daily.Mean.PM2.5.Concentration, col = 'green',breaks = 100)
 rug(pollution$Daily.Mean.PM2.5.Concentration)
@@ -193,10 +194,12 @@ load(file = "maacs.rda")
 str(maacs)
 
 # histogram
+
 library(ggplot2)
 qplot(log(eno), data = maacs)
 qplot(log(eno), data = maacs, fill = mopos)
  # density graph
+
 qplot(log(eno), data = maacs, geom = "density", color = mopos)
 # scatter plot
 qplot(log(pm25), log(eno), data = maacs)

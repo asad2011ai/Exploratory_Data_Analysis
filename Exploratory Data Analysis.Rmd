@@ -1,6 +1,6 @@
 ---
 title: "Exploratory Data Analysis"
-author: "Sana Rasheed"
+author: "Asad Ullah"
 date: "October 20, 2020"
 output: html_document
 ---
@@ -28,11 +28,14 @@ head(airquality)
 
 ```{r }
 # START YOUR CODE FROM HERE
+hist(airquality$Temp, col = 'green')
+hist(airquality$Wind, col = "blue")
+rug(airquality$Wind)
 ```
 
 
 ```{r }
-
+with(airquality, plot(Solar.R, Ozone, col = 'red'))
 ```
 
 ### Good Job! You have completed this section!
@@ -56,16 +59,26 @@ library(lattice)
 library(ggplot2)
 
 head(state.x77)
-#head(state.region)
+head(state.region)
 ```
 
 ```{r }
 # START YOUR CODE FROM HERE
+state <- data.frame(state.x77, region= state.region)
+
+with(state, plot(Income,Illiteracy))
+
+xyplot(Life.Exp ~ Population | region, data = state, layout = c(4,1))
+
 ```
 
 
 ```{r }
+pdf("rplot.pdf") 
+with(state, plot(Income,Illiteracy))
 
+xyplot(Life.Exp ~ Population | region, data = state, layout = c(4,1))
+dev.off()
 ```
 
 
@@ -83,10 +96,12 @@ head(women)
 
 ```{r }
 # START YOUR CODE FROM HERE
+with(women, plot(height, weight))
 ```
 
 ```{r }
-
+g <- ggplot(women, aes(height, weight))
+g + geom_point() + geom_smooth(method = 'lm') 
 ```
 
 ### Good Job! You have completed this section!
@@ -110,21 +125,31 @@ You need to use ggplot2 to accomplish this task.
 
 ```{r }
 head(longley)
-
 ```
 
 ```{r }
 # START YOUR CODE FOR GRAPH-1
-
+g <- ggplot(data = longley, aes(Unemployed, GNP))
+g + geom_point() + labs(title = "GNP and Unemployed")
 ```
 
 ```{r }
 # START YOUR CODE fFOR GRAPH-2
+ggplot(longley, aes(GNP, Unemployed))+ geom_point(color = "blue")+labs(title = "GNP and Unemployed with Blue")
+ggplot(longley, aes(GNP, Employed))+ geom_point(color = "Green")+labs(title = "GNP and Employed with Green")
+
+
 
 ```
 
 ```{r }
 # START YOUR CODE FOR GRAPH-3
+
+Armed.Forces.Unemployed.Rel <- ifelse(longley$Armed.Forces > longley$Unemployed, "y", "N")
+
+longley$ARMUnemploy <- Armed.Forces.Unemployed.Rel
+
+ggplot(longley, aes(Armed.Forces, Unemployed, colour = ARMUnemploy))+ geom_point()+labs(title = "Condition based plot of Y and N")
 
 ```
 
